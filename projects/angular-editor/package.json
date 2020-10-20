@@ -1,13 +1,13 @@
 {
   "name": "@geargroup/angular-editor",
   "version": "2.0.0",
-  "description": "A simple native WYSIWYG editor for Angular 6+, 7+, 8+. Rich Text editor component for Angular.",
+  "description": "A simple native WYSIWYG editor for Angular 10+. Rich Text editor component for Angular.",
   "author": "Andrey Kolkov <a.kolkov@gmail.com>",
-  "repository": "https://github.com/kolkov/angular-editor",
+  "repository": "https://github.com/gear-group/angular-editor",
   "license": "MIT",
   "private": false,
   "bugs": {
-    "url": "https://github.com/kolkov/angular-editor/issues"
+    "url": "https://github.com/gear-group/angular-editor/issues"
   },
   "peerDependencies": {
     "@angular/common": ">=8.0.0 <11",
