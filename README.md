@@ -25,3 +25,4 @@ npm install @geargroup/angular-editor --save
 * Improve look and feel
 * Improve button's interaction display in custom options
 
+Project forked from https://github.com/kolkov/angular-editor
