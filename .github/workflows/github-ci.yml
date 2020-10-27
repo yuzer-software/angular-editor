@@ -3,11 +3,11 @@ name: CI
 # Controls when the action will run.
 on:
   push:
-    branches: dev
+    branches: master
 
-# Workflow to build and release windows and macos versions of the client.
+# Workflow to build the project.
 jobs:
-  # build and release job:
+  # build job:
   build:
     runs-on: ubuntu-latest
 
