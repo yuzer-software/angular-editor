@@ -3,40 +3,23 @@ name: CI
 # Controls when the action will run.
 on:
   push:
-    branches: [master, prod]
+    branches: dev
 
 # Workflow to build and release windows and macos versions of the client.
 jobs:
   # build and release job:
   build:
-    runs-on: [self-hosted, macOS]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
         with:
-          token: ${{ secrets.REPOS_TOKEN }}
-
+          node-version: '12.x'
       - name: Build
         run: |
           yarn install
           yarn clean
           yarn build:lib
-      - uses: gear-group/action-slack@v3
-        with:
-          username: 'Github'
-          icon_emoji: ' '
-          text: 'Completed'
-          author_name: ${{ github.repository }}
-          status: ${{ job.status }}
-          fields: author,ref,message
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always() # Pick up events even if the job fails or is canceled.
-
- # release-mac:
- #       - name: Upload build artifact
-  #      uses: actions/upload-artifact@v2
-  #      with:
-  #        name: dist
-  #        path: dist
