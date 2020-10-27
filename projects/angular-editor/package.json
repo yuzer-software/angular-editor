@@ -1,0 +1,33 @@
+{
+  "name": "@geargroup/angular-editor",
+  "version": "2.0.0",
+  "description": "A simple native WYSIWYG editor for Angular 10+. Rich Text editor component for Angular.",
+  "author": "Andrey Kolkov <a.kolkov@gmail.com>",
+  "repository": "https://github.com/gear-group/angular-editor",
+  "license": "MIT",
+  "private": false,
+  "bugs": {
+    "url": "https://github.com/gear-group/angular-editor/issues"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=8.0.0 <11",
+    "@angular/core": ">=8.0.0 <11",
+    "@angular/forms": ">=8.0.0 <11",
+    "@angular/platform-browser": ">=8.0.0 <11",
+    "rxjs": "^6.x.x"
+  },
+  "keywords": [
+    "angular",
+    "editor",
+    "native",
+    "wysiwyg",
+    "angular-editor",
+    "angular-wysiwyg-editor",
+    "wysiwyg-editor",
+    "rich",
+    "rich text editor"
+  ],
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

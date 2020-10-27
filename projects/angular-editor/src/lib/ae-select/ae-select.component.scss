@@ -1,0 +1,12 @@
+.dropdown-item{
+    &.focused{
+        color: #16181b !important;
+        background-color: #dae0e5;
+        border-color: #d3d9df;
+    }
+    &:active {
+        color: #fff;
+        background-color: #dae0e5;
+        border-color: #d3d9df;
+    }
+}

@@ -1,0 +1,13 @@
+<div ngbDropdown>
+  <button ngbDropdownToggle type="button" role="button" id="selectDropDown" [class]="selectBtnClass">
+    {{label}}
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+    <button ngbDropdownItem type="button" role="button" *ngFor="let item of options; let i = index"
+      (click)="optionSelect(item, $event)"
+      [ngClass]="{'selected': item.value === value, 'focused': i === optionId}">
+      {{item.label}}
+    </button>
+    <div class="dropdown-item" *ngIf="!options.length">No items for select</div>
+  </div>
+</div>
