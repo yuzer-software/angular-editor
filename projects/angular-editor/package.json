@@ -1,8 +1,8 @@
 {
   "name": "@geargroup/angular-editor",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A simple native WYSIWYG editor for Angular 10+. Rich Text editor component for Angular.",
-  "author": "Andrey Kolkov <a.kolkov@gmail.com>",
+  "author": "Gear Group",
   "repository": "https://github.com/gear-group/angular-editor",
   "license": "MIT",
   "private": false,

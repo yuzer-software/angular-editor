@@ -82,12 +82,10 @@
     </button>
   </div>
   <div class="btn-group m-1">
-
     <ae-select class="select-heading" [selectBtnClass]="toolbarBtnClass" [options]="headings" [(ngModel)]="block" (change)="triggerCommand(block)"
       [disabled]="htmlMode" [hidden]="isButtonHidden('heading')" tabindex="-1"></ae-select>
   </div>
   <div class="btn-group m-1">
-
     <ae-select class="select-font" [selectBtnClass]="toolbarBtnClass" [options]="fonts" [(ngModel)]="fontName" (change)="setFontName(fontName)"
       [disabled]="htmlMode" [hidden]="isButtonHidden('fontName')" tabindex="-1"></ae-select>
   </div>

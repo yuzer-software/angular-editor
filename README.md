@@ -4,7 +4,9 @@
 
 # AngularEditor
 
-A simple native WYSIWYG/Rich Text editor for Angular 10+
+A simple native WYSIWYG/Rich Text editor for Angular 11+
+
+Forked from the work of Andrey Kolkov (https://github.com/kolkov/angular-editor) with addition of bootstrap styles and migration to latest angular version.
 
 ![Nov-27-2019 17-26-29](https://user-images.githubusercontent.com/216412/69763434-259cd800-113b-11ea-918f-0565ebce0e48.gif)
 
@@ -18,6 +20,10 @@ Install via [npm][npm] package manager
 npm install @geargroup/angular-editor --save
 ```
 ### Versions
+
+2.1.0 for Angular v11
+* Update dependencies
+* Cleanup some css and do not embed default
 
 2.0.0 for Angular v10
 * Update Bootstrap and FontAwesomeIcons v5

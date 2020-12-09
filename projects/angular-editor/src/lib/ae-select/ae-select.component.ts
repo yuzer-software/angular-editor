@@ -1,5 +1,4 @@
 import {
-  Attribute,
   Component,
   ElementRef,
   EventEmitter,
@@ -10,10 +9,10 @@ import {
   Output,
   Renderer2,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {isDefined} from '../utils';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { isDefined } from '../utils';
 
 export interface SelectOption {
   label: string;
@@ -23,7 +22,6 @@ export interface SelectOption {
 @Component({
   selector: 'ae-select',
   templateUrl: './ae-select.component.html',
-  styleUrls: ['./ae-select.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {

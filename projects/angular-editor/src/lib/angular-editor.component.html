@@ -17,7 +17,7 @@
     </div>
     <span class="angular-editor-placeholder">{{ placeholder || config['placeholder'] }}</span>
   </div>
-  <angular-editor-toolbar *ngIf="config.toolbarPosition === 'bottom'" #editorToolbar [id]="id"
+    <angular-editor-toolbar *ngIf="config.toolbarPosition === 'bottom'" #editorToolbar [id]="id"
     [uploadUrl]="config.uploadUrl" [showToolbar]="config.showToolbar !== undefined ? config.showToolbar : true"
     [fonts]="getFonts()" [customClasses]="config.customClasses" [defaultFontName]="config.defaultFontName"
     [defaultFontSize]="config.defaultFontSize" [hiddenButtons]="config.toolbarHiddenButtons"

@@ -8,3 +8,6 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@import 'dist/angular-editor/style.scss';
+
+@include angular-editor-theme(());
