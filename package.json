@@ -1,6 +1,6 @@
 {
   "name": "@geargroup/angular-editor",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "scripts": {
     "ng": "ng",
     "start": "ng build angular-editor --prod && yarn copy:style && ng serve",
@@ -36,7 +36,7 @@
     "@fortawesome/free-solid-svg-icons": "5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
     "bootstrap": "^4.5.3",
-    "rxjs": "~6.6.3",
+    "rxjs": "^6.6.3",
     "tslib": "^2.0.3",
     "zone.js": "~0.11.3"
   },
