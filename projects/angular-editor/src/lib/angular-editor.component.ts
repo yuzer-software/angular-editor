@@ -11,18 +11,21 @@ import {
   HostListener,
   Inject,
   Input,
+  NgZone,
   OnDestroy,
   OnInit,
   Output,
   Renderer2,
   SecurityContext,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { AngularEditorToolbarComponent } from './angular-editor-toolbar.component';
 import { AngularEditorService } from './angular-editor.service';
 import { AngularEditorConfig, angularEditorConfig } from './config';
+import { positionElements } from './positioning';
 import { isDefined } from './utils';
 
 @Component({
@@ -32,11 +35,12 @@ import { isDefined } from './utils';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => AngularEditorComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class AngularEditorComponent implements OnInit, ControlValueAccessor, AfterViewInit, OnDestroy {
+  private zoneSubscription?: Subscription;
 
   private onChange: (value: string) => void;
   private onTouched: () => void;
@@ -47,6 +51,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
   focused = false;
   touched = false;
   changed = false;
+  floating = false;
 
   focusInstance: any;
   blurInstance: any;
@@ -55,21 +60,30 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
   @Input() config: AngularEditorConfig = angularEditorConfig;
   @Input() placeholder = '';
   @Input() tabIndex: number | null;
+  /**
+   * A selector specifying the element the dropdown should be appended to.
+   * Currently only supports "body".
+   *
+   * @since 4.1.0
+   */
+  @Input() container: null | 'body';
 
   @Output() html;
 
-  @ViewChild('editor', {static: true}) textArea: ElementRef;
-  @ViewChild('editorWrapper', {static: true}) editorWrapper: ElementRef;
+  @ViewChild('angularEditor', { static: true }) angularEditor: ElementRef;
+  @ViewChild('editor', { static: true }) textArea: ElementRef;
+  @ViewChild('editorWrapper', { static: true }) editorWrapper: ElementRef;
   @ViewChild('editorToolbar') editorToolbar: AngularEditorToolbarComponent;
+  private _bodyContainer: HTMLElement | null = null;
 
   @Output() viewMode = new EventEmitter<boolean>();
 
   /** emits `blur` event when focused out from the textarea */
-    // tslint:disable-next-line:no-output-native no-output-rename
+  // tslint:disable-next-line:no-output-native no-output-rename
   @Output('blur') blurEvent: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
   /** emits `focus` event when focused in to the textarea */
-    // tslint:disable-next-line:no-output-rename no-output-native
+  // tslint:disable-next-line:no-output-rename no-output-native
   @Output('focus') focusEvent: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
   @HostBinding('attr.tabindex') tabindex = -1;
@@ -86,17 +100,27 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     private sanitizer: DomSanitizer,
     private cdRef: ChangeDetectorRef,
     @Attribute('tabindex') defaultTabIndex: string,
-    @Attribute('autofocus') private autoFocus: any
+    @Attribute('autofocus') private autoFocus: any,
+    private elementRef: ElementRef<HTMLElement>,
+    private ngZone: NgZone
   ) {
     const parsedTabIndex = Number(defaultTabIndex);
-    this.tabIndex = (parsedTabIndex || parsedTabIndex === 0) ? parsedTabIndex : null;
+    this.tabIndex = parsedTabIndex || parsedTabIndex === 0 ? parsedTabIndex : null;
   }
 
   ngOnInit() {
     this.config.toolbarPosition = this.config.toolbarPosition ? this.config.toolbarPosition : angularEditorConfig.toolbarPosition;
+
+    this.floating = this.config.toolbarPosition === 'floating';
+    if (this.floating) {
+      this.zoneSubscription = this.ngZone.onStable.subscribe(() => {
+        this.positionToolbar();
+      });
+    }
   }
 
   ngAfterViewInit() {
+    this.resetContainer();
     if (isDefined(this.autoFocus)) {
       this.focus();
     }
@@ -132,6 +156,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
       event.stopPropagation();
       return;
     }
+    this.applyContainer(this.container);
     this.focused = true;
     this.focusEvent.emit(event);
     if (!this.touched || !this.changed) {
@@ -166,6 +191,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
       const parent = (event.relatedTarget as HTMLElement).parentElement;
       if (!parent.classList.contains('angular-editor-toolbar-set') && !parent.classList.contains('ae-picker')) {
         this.blurEvent.emit(event);
+        this.resetContainer();
         this.focused = false;
       }
     }
@@ -180,6 +206,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     } else {
       const sourceText = this.doc.getElementById('sourceText' + this.id);
       sourceText.focus();
+      this.applyContainer(this.container);
       this.focused = true;
     }
   }
@@ -195,13 +222,14 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     } else {
       html = element.innerText;
     }
-    if ((!html || html === '<br>')) {
+    if (!html || html === '<br>') {
       html = '';
     }
     if (typeof this.onChange === 'function') {
-      this.onChange(this.config.sanitize || this.config.sanitize === undefined ?
-        this.sanitizer.sanitize(SecurityContext.HTML, html) : html);
-      if ((!html) !== this.showPlaceholder) {
+      this.onChange(
+        this.config.sanitize || this.config.sanitize === undefined ? this.sanitizer.sanitize(SecurityContext.HTML, html) : html
+      );
+      if (!html !== this.showPlaceholder) {
         this.togglePlaceholder(this.showPlaceholder);
       }
     }
@@ -215,7 +243,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
    * @param fn a function
    */
   registerOnChange(fn: any): void {
-    this.onChange = e => (e === '<br>' ? fn('') : fn(e)) ;
+    this.onChange = (e) => (e === '<br>' ? fn('') : fn(e));
   }
 
   /**
@@ -234,7 +262,6 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
    * @param value value to be executed when there is a change in contenteditable
    */
   writeValue(value: any): void {
-
     if ((!value || value === '<br>' || value === '') !== this.showPlaceholder) {
       this.togglePlaceholder(this.showPlaceholder);
     }
@@ -267,7 +294,6 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     if (!value) {
       this.r.addClass(this.editorWrapper.nativeElement, 'show-placeholder');
       this.showPlaceholder = true;
-
     } else {
       this.r.removeClass(this.editorWrapper.nativeElement, 'show-placeholder');
       this.showPlaceholder = false;
@@ -381,14 +407,14 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
 
   getFonts() {
     const fonts = this.config.fonts ? this.config.fonts : angularEditorConfig.fonts;
-    return fonts.map(x => {
-      return {label: x.name, value: x.name};
+    return fonts.map((x) => {
+      return { label: x.name, value: x.name };
     });
   }
 
   getCustomTags() {
     const tags = ['span'];
-    this.config.customClasses.forEach(x => {
+    this.config.customClasses.forEach((x) => {
       if (x.tag !== undefined) {
         if (!tags.includes(x.tag)) {
           tags.push(x.tag);
@@ -405,10 +431,64 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     if (this.focusInstance) {
       this.focusInstance();
     }
+    this.resetContainer();
+    this.zoneSubscription?.unsubscribe();
   }
 
   filterStyles(html: string): string {
     html = html.replace('position: fixed;', '');
     return html;
+  }
+
+  private positionToolbar() {
+    const menu = this.editorToolbar;
+    if (this.focused && menu) {
+      positionElements(
+        this.angularEditor.nativeElement,
+        this._bodyContainer || this.editorToolbar.nativeElement,
+        ['top'],
+        this.container === 'body'
+      );
+    }
+  }
+
+  private resetContainer() {
+    const renderer = this.r;
+    if (this.editorToolbar) {
+      const editorElement = this.angularEditor.nativeElement;
+      const toolbarMenuElement = this.editorToolbar.nativeElement;
+
+      if (this.config.toolbarPosition === 'top') {
+        renderer.insertBefore(editorElement, toolbarMenuElement, this.editorWrapper.nativeElement);
+      } else {
+        renderer.appendChild(editorElement, toolbarMenuElement);
+      }
+      renderer.removeStyle(toolbarMenuElement, 'position');
+      renderer.removeStyle(toolbarMenuElement, 'transform');
+    }
+    if (this._bodyContainer) {
+      renderer.removeChild(this.doc.body, this._bodyContainer);
+      this._bodyContainer = null;
+    }
+  }
+
+  private applyContainer(container: null | 'body' = null) {
+    if (!this.floating) {
+      return;
+    }
+    this.resetContainer();
+    if (container === 'body') {
+      const renderer = this.r;
+      const toolbarMenuElement = this.editorToolbar.nativeElement;
+      const bodyContainer = (this._bodyContainer = this._bodyContainer || renderer.createElement('div'));
+
+      // Override some styles to have the positioning working
+      renderer.setStyle(bodyContainer, 'position', 'absolute');
+      renderer.setStyle(toolbarMenuElement, 'position', 'static');
+      renderer.setStyle(bodyContainer, 'z-index', '1050');
+
+      renderer.appendChild(bodyContainer, toolbarMenuElement);
+      renderer.appendChild(this.doc.body, bodyContainer);
+    }
   }
 }

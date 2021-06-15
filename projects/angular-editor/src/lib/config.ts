@@ -29,7 +29,7 @@ export interface AngularEditorConfig {
   fonts?: Font[];
   customClasses?: CustomClass[];
   sanitize?: boolean;
-  toolbarPosition?: 'top' | 'bottom';
+  toolbarPosition?: 'top' | 'bottom' | 'floating';
   outline?: boolean;
   toolbarHiddenButtons?: string[][];
   toolbarBgClass?: string;

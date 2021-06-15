@@ -5,13 +5,14 @@ import { AngularEditorConfig } from 'angular-editor';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'app';
 
   form: FormGroup;
 
+  floatingHtmlContent = '';
   htmlContent1 = '';
   htmlContent2 = '';
 
@@ -36,7 +37,7 @@ export class AppComponent implements OnInit {
       },
       {
         name: 'redText',
-        class: 'redText'
+        class: 'redText',
       },
       {
         name: 'titleText',
@@ -44,10 +45,7 @@ export class AppComponent implements OnInit {
         tag: 'h1',
       },
     ],
-    toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
-    ],
+    toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
     toolbarBgClass: 'bg-dark',
     toolbarBtnClass: 'btn btn-light btn-sm',
   };
@@ -71,21 +69,56 @@ export class AppComponent implements OnInit {
       },
       {
         name: 'redText',
-        class: 'redText'
+        class: 'redText',
       },
       {
         name: 'titleText',
         class: 'titleText',
         tag: 'h1',
       },
-    ]
+    ],
   };
 
-  constructor(private formBuilder: FormBuilder) { }
+  floatingConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    minHeight: '5rem',
+    maxHeight: '15rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    sanitize: false,
+    // toolbarPosition: 'top',
+    outline: true,
+    defaultFontName: 'Comic Sans MS',
+    defaultFontSize: '5',
+    // showToolbar: false,
+    defaultParagraphSeparator: 'p',
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText',
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    toolbarPosition: 'floating',
+    toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
+    toolbarBgClass: 'bg-dark',
+    toolbarBtnClass: 'btn btn-light btn-sm',
+  };
+
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      signature: ['', Validators.required]
+      signature: ['', Validators.required],
     });
     console.log(this.htmlContent1);
   }

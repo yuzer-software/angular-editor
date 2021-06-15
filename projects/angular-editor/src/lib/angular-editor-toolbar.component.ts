@@ -10,6 +10,13 @@ import { CustomClass } from './config';
   templateUrl: './angular-editor-toolbar.component.html',
 })
 export class AngularEditorToolbarComponent implements OnInit {
+  nativeElement: HTMLElement;
+
+  textColorToggle = false;
+  textColor: string = '#000';
+  backgroundColorToggle = false;
+  backgroundColor: string = '#000000ff';
+
   htmlMode = false;
   linkSelected = false;
   block = 'default';
@@ -53,16 +60,16 @@ export class AngularEditorToolbarComponent implements OnInit {
     },
     {
       label: 'Predefined',
-      value: 'pre'
+      value: 'pre',
     },
     {
       label: 'Standard',
-      value: 'div'
+      value: 'div',
     },
     {
       label: 'default',
-      value: 'default'
-    }
+      value: 'default',
+    },
   ];
 
   fontSizes: SelectOption[] = [
@@ -93,7 +100,7 @@ export class AngularEditorToolbarComponent implements OnInit {
     {
       label: '7',
       value: '7',
-    }
+    },
   ];
 
   customClassId = '-1';
@@ -104,13 +111,28 @@ export class AngularEditorToolbarComponent implements OnInit {
 
   tagMap = {
     BLOCKQUOTE: 'indent',
-    A: 'link'
+    A: 'link',
   };
 
   select = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'PRE', 'DIV'];
 
-  buttons = ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'justifyLeft', 'justifyCenter',
-    'justifyRight', 'justifyFull', 'indent', 'outdent', 'insertUnorderedList', 'insertOrderedList', 'link'];
+  buttons = [
+    'bold',
+    'italic',
+    'underline',
+    'strikeThrough',
+    'subscript',
+    'superscript',
+    'justifyLeft',
+    'justifyCenter',
+    'justifyRight',
+    'justifyFull',
+    'indent',
+    'outdent',
+    'insertUnorderedList',
+    'insertOrderedList',
+    'link',
+  ];
   activeButtons: string[];
 
   @Input() id: string;
@@ -157,12 +179,14 @@ export class AngularEditorToolbarComponent implements OnInit {
   constructor(
     private r: Renderer2,
     private editorService: AngularEditorService,
-    @Inject(DOCUMENT) private doc: any
+    @Inject(DOCUMENT) private doc: any,
+    elementRef: ElementRef<HTMLElement>
   ) {
+    this.nativeElement = elementRef.nativeElement;
   }
 
   ngOnInit() {
-    this.activeButtons = this.buttons.filter(it => !this.isButtonHidden(it));
+    this.activeButtons = this.buttons.filter((it) => !this.isButtonHidden(it));
     this.toolbarBgClass = this.toolbarBgClass ? this.toolbarBgClass : '';
     this.toolbarBtnClass = this.toolbarBtnClass ? this.toolbarBtnClass : 'btn btn-light';
   }
@@ -182,7 +206,7 @@ export class AngularEditorToolbarComponent implements OnInit {
     if (!this.showToolbar) {
       return;
     }
-    this.activeButtons.forEach(e => {
+    this.activeButtons.forEach((e) => {
       const result = this.doc.queryCommandState(e);
       const elementById = this.doc.getElementById(e + '-' + this.id);
       if (result) {
@@ -200,10 +224,10 @@ export class AngularEditorToolbarComponent implements OnInit {
     if (!this.showToolbar) {
       return;
     }
-    this.linkSelected = nodes.findIndex(x => x.nodeName === 'A') > -1;
+    this.linkSelected = nodes.findIndex((x) => x.nodeName === 'A') > -1;
     let found = false;
-    this.select.forEach(y => {
-      const node = nodes.find(x => x.nodeName === y);
+    this.select.forEach((y) => {
+      const node = nodes.find((x) => x.nodeName === y);
       if (node !== undefined && y === node.nodeName) {
         if (found === false) {
           this.block = node.nodeName.toLowerCase();
@@ -217,7 +241,7 @@ export class AngularEditorToolbarComponent implements OnInit {
     found = false;
     if (this._customClasses) {
       this._customClasses.forEach((y, index) => {
-        const node = nodes.find(x => {
+        const node = nodes.find((x) => {
           if (x instanceof Element) {
             return x.className === y.class;
           }
@@ -233,9 +257,9 @@ export class AngularEditorToolbarComponent implements OnInit {
       });
     }
 
-    Object.keys(this.tagMap).map(e => {
+    Object.keys(this.tagMap).map((e) => {
       const elementById = this.doc.getElementById(this.tagMap[e] + '-' + this.id);
-      const node = nodes.find(x => x.nodeName === e);
+      const node = nodes.find((x) => x.nodeName === e);
       if (node !== undefined && e === node.nodeName) {
         this.r.addClass(elementById, 'active');
       } else {
@@ -253,7 +277,7 @@ export class AngularEditorToolbarComponent implements OnInit {
    * insert URL link
    */
   insertUrl() {
-    let url = 'https:\/\/';
+    let url = 'https://';
     const selection = this.editorService.savedSelection;
     if (selection && selection.commonAncestorContainer.parentElement.nodeName === 'A') {
       const parent = selection.commonAncestorContainer.parentElement as HTMLAnchorElement;
@@ -323,7 +347,7 @@ export class AngularEditorToolbarComponent implements OnInit {
     const file = event.target.files[0];
     if (file.type.includes('image/')) {
       if (this.uploadUrl) {
-        this.editorService.uploadImage(file).subscribe(e => {
+        this.editorService.uploadImage(file).subscribe((e) => {
           if (e instanceof HttpResponse) {
             this.editorService.insertImage(e.body.imageUrl);
             event.srcElement.value = null;
@@ -361,7 +385,7 @@ export class AngularEditorToolbarComponent implements OnInit {
     let result: any;
     for (const arr of this.hiddenButtons) {
       if (arr instanceof Array) {
-        result = arr.find(item => item === name);
+        result = arr.find((item) => item === name);
       }
       if (result) {
         break;
@@ -369,5 +393,4 @@ export class AngularEditorToolbarComponent implements OnInit {
     }
     return result !== undefined;
   }
-
 }

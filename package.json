@@ -1,6 +1,6 @@
 {
   "name": "@geargroup/angular-editor",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng build angular-editor --prod && yarn copy:style && ng serve",
@@ -36,7 +36,8 @@
     "@fortawesome/free-solid-svg-icons": "5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
     "bootstrap": "^4.5.3",
-    "rxjs": "^6.6.3",
+    "ngx-color-picker": "^11.0.0",
+    "rxjs": "~6.6.3",
     "tslib": "^2.0.3",
     "zone.js": "~0.11.3"
   },
@@ -59,6 +60,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "ng-packagr": "^11.0.3",
+    "prettier": "^2.3.1",
     "protractor": "~7.0.0",
     "ts-node": "~9.1.1",
     "tslint": "~6.1.3",
