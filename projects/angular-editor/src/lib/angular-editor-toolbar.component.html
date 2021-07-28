@@ -311,6 +311,18 @@
     >
       <fa-icon [icon]="['fas', 'image']" [fixedWidth]="true"></fa-icon>
     </button>
+    <ng-container *ngIf="customButtons">
+      <button
+        *ngFor="let button of customButtons"
+        [id]="button.customButtonId + '-' + id"
+        type="button"
+        [class]="toolbarBtnClass"
+        (click)="button.onClick()"
+        [disabled]="htmlMode"
+      >
+        <fa-icon [icon]="button.faIcon" [fixedWidth]="true"></fa-icon>
+      </button>
+    </ng-container>
     <button
       [id]="'insertVideo-' + id"
       type="button"
