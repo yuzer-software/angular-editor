@@ -1,9 +1,9 @@
-@import "style";
+@import 'style';
 
 .angular-editor {
   position: relative;
 
-  ::ng-deep [contenteditable=true]:empty:before {
+  ::ng-deep [contenteditable='true']:empty:before {
     content: attr(placeholder);
     // display: block; // for firefox
     color: #868e96;
@@ -17,13 +17,12 @@
       min-height: 5rem;
       padding: 0.5rem 0.8rem 1rem 0.8rem;
       border: 1px solid #ddd;
-      background-color: #FFF;
+      background-color: #fff;
       overflow-x: hidden;
       overflow-y: auto;
       // z-index: 2;
       position: relative;
       // pointer-events: none;
-
 
       ::ng-deep blockquote {
         margin-left: 1rem;

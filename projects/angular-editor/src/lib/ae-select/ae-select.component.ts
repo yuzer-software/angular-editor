@@ -3,7 +3,8 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  forwardRef, HostBinding,
+  forwardRef,
+  HostBinding,
   HostListener,
   Input,
   OnInit,
@@ -12,8 +13,8 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {isDefined} from '../utils';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { isDefined } from '../utils';
 
 export interface SelectOption {
   label: string;
@@ -30,8 +31,8 @@ export interface SelectOption {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => AeSelectComponent),
       multi: true,
-    }
-  ]
+    },
+  ],
 })
 export class AeSelectComponent implements OnInit, ControlValueAccessor {
   @Input() options: SelectOption[] = [];
@@ -59,11 +60,9 @@ export class AeSelectComponent implements OnInit, ControlValueAccessor {
   // tslint:disable-next-line:no-output-native no-output-rename
   @Output('change') changeEvent = new EventEmitter();
 
-  @ViewChild('labelButton', {static: true}) labelButton: ElementRef;
+  @ViewChild('labelButton', { static: true }) labelButton: ElementRef;
 
-  constructor(private elRef: ElementRef,
-              private r: Renderer2,
-  ) {}
+  constructor(private elRef: ElementRef, private r: Renderer2) {}
 
   ngOnInit() {
     this.selectedOption = this.options[0];
@@ -127,10 +126,8 @@ export class AeSelectComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  onChange: any = () => {
-  }
-  onTouched: any = () => {
-  }
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   registerOnChange(fn) {
     this.onChange = fn;
@@ -196,19 +193,13 @@ export class AeSelectComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  _handleSpace($event) {
-
-  }
+  _handleSpace($event) {}
 
   _handleEnter($event) {
     this.optionSelect(this.options[this.optionId], $event);
   }
 
-  _handleTab($event) {
+  _handleTab($event) {}
 
-  }
-
-  _handleBackspace() {
-
-  }
+  _handleBackspace() {}
 }

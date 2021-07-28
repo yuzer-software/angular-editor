@@ -5,7 +5,7 @@ import { AngularEditorConfig } from 'angular-editor';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'app';
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       },
       {
         name: 'redText',
-        class: 'redText'
+        class: 'redText',
       },
       {
         name: 'titleText',
@@ -44,10 +44,7 @@ export class AppComponent implements OnInit {
         tag: 'h1',
       },
     ],
-    toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
-    ],
+    toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
     toolbarBgClass: 'bg-dark',
     toolbarBtnClass: 'btn btn-light btn-sm',
   };
@@ -71,21 +68,21 @@ export class AppComponent implements OnInit {
       },
       {
         name: 'redText',
-        class: 'redText'
+        class: 'redText',
       },
       {
         name: 'titleText',
         class: 'titleText',
         tag: 'h1',
       },
-    ]
+    ],
   };
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      signature: ['', Validators.required]
+      signature: ['', Validators.required],
     });
     console.log(this.htmlContent1);
   }

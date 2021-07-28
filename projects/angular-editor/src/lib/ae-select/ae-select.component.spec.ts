@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AeSelectComponent, SelectOption } from './ae-select.component';
 import { By } from '@angular/platform-browser';
 
@@ -10,19 +9,18 @@ describe('AeSelectComponent', () => {
   const testOptions: SelectOption[] = [
     {
       label: 'test label1',
-      value: 'test value1'
+      value: 'test value1',
     },
     {
       label: 'test label2',
-      value: 'test value2'
-    }
+      value: 'test value2',
+    },
   ];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AeSelectComponent ]
-    })
-      .compileComponents();
+      declarations: [AeSelectComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -101,5 +99,4 @@ describe('AeSelectComponent', () => {
     expect(changeEvent).toHaveBeenCalledWith(testOptions[1].value);
     expect(component.opened).toBe(false);
   });
-
 });

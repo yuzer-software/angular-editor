@@ -8,14 +8,14 @@ a {
   margin-top: 5px;
   resize: vertical;
   &:after {
-    content:"";
+    content: '';
     position: absolute;
     bottom: 0;
-    right:0;
-    display:block;
-    width:8px;
-    height:8px;
+    right: 0;
+    display: block;
+    width: 8px;
+    height: 8px;
     cursor: nwse-resize;
-    background-color: rgba(255,255,255,0.5)
+    background-color: rgba(255, 255, 255, 0.5);
   }
 }

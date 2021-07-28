@@ -9,19 +9,15 @@ export interface UploadResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AngularEditorService {
-
   savedSelection: Range | null;
   selectedText: string;
   uploadUrl: string;
   uploadWithCredentials: boolean;
 
-  constructor(
-    private http: HttpClient,
-    @Inject(DOCUMENT) private doc: any
-  ) { }
+  constructor(private http: HttpClient, @Inject(DOCUMENT) private doc: any) {}
 
   /**
    * Executed command from editor header buttons exclude toggleEditorMode
@@ -87,7 +83,6 @@ export class AngularEditorService {
    * @param html HTML string
    */
   insertHtml(html: string): void {
-
     const isHTMLInserted = this.doc.execCommand('insertHTML', false, html);
 
     if (!isHTMLInserted) {
@@ -110,7 +105,7 @@ export class AngularEditorService {
     } else {
       this.savedSelection = null;
     }
-  }
+  };
 
   /**
    * restore selection when the editor is focused in
@@ -142,7 +137,6 @@ export class AngularEditorService {
 
   /** check any selection is made or not */
   private checkSelection(): any {
-
     const selectedText = this.savedSelection.toString();
 
     if (selectedText.length === 0) {
@@ -156,7 +150,6 @@ export class AngularEditorService {
    * @param file The file
    */
   uploadImage(file: File): Observable<HttpEvent<UploadResponse>> {
-
     const uploadData: FormData = new FormData();
 
     uploadData.append('file', file, file.name);
@@ -213,7 +206,7 @@ export class AngularEditorService {
   }
 
   private insertVimeoVideoTag(videoUrl: string): void {
-    const sub = this.http.get<any>(`https://vimeo.com/api/oembed.json?url=${videoUrl}`).subscribe(data => {
+    const sub = this.http.get<any>(`https://vimeo.com/api/oembed.json?url=${videoUrl}`).subscribe((data) => {
       const imageUrl = data.thumbnail_url_with_play_button;
       const thumbnail = `<div>
         <a href='${videoUrl}' target='_blank'>
@@ -250,7 +243,7 @@ export class AngularEditorService {
     } else {
       // Iterate nodes until we hit the end container
       while (node && node !== endNode) {
-        rangeNodes.push(node = this.nextNode(node));
+        rangeNodes.push((node = this.nextNode(node)));
       }
 
       // Add partially selected nodes at the start of the range
@@ -295,8 +288,7 @@ export class AngularEditorService {
   removeSelectedElements(tagNames) {
     const tagNamesArray = tagNames.toLowerCase().split(',');
     this.getSelectedNodes().forEach((node) => {
-      if (node.nodeType === 1 &&
-        tagNamesArray.indexOf(node.tagName.toLowerCase()) > -1) {
+      if (node.nodeType === 1 && tagNamesArray.indexOf(node.tagName.toLowerCase()) > -1) {
         // Remove the node and replace it with its children
         this.replaceWithOwnChildren(node);
       }
