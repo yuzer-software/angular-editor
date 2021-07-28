@@ -3,7 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, Renderer2, ViewChild, NgModule } from '@angular/core';
 import { SelectOption } from './ae-select/ae-select.component';
 import { AngularEditorService } from './angular-editor.service';
-import { CustomClass } from './config';
+import { CustomButton, CustomClass } from './config';
 
 @Component({
   selector: 'angular-editor-toolbar',
@@ -135,6 +135,7 @@ export class AngularEditorToolbarComponent implements OnInit {
   @Input() fonts: SelectOption[] = [{ label: '', value: '' }];
   @Input() toolbarBgClass: string;
   @Input() toolbarBtnClass: string;
+  @Input() customButtons: CustomButton[];
 
   @Input()
   set customClasses(classes: CustomClass[]) {
