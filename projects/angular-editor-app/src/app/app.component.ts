@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faDownload, faImages } from '@fortawesome/free-solid-svg-icons';
 import { AngularEditorConfig } from 'angular-editor';
 
 @Component({
@@ -30,6 +32,15 @@ export class AppComponent implements OnInit {
     defaultFontSize: '5',
     // showToolbar: false,
     defaultParagraphSeparator: 'p',
+    customButtons: [
+      {
+        customButtonId: 'insertImageGallery',
+        faIcon: ['fas', 'images'],
+        onClick: () => {
+          console.log('click on insertImageGallery');
+        },
+      },
+    ],
     customClasses: [
       {
         name: 'quote',
@@ -62,6 +73,22 @@ export class AppComponent implements OnInit {
     defaultFontName: 'Comic Sans MS',
     defaultFontSize: '5',
     defaultParagraphSeparator: 'p',
+    customButtons: [
+      {
+        customButtonId: 'insertImageGallery',
+        faIcon: ['fas', 'images'],
+        onClick: () => {
+          console.log('click on insertImageGallery');
+        },
+      },
+      {
+        customButtonId: 'downloadImageGallery',
+        faIcon: ['fas', 'download'],
+        onClick: () => {
+          console.log('click on downloadImageGallery');
+        },
+      },
+    ],
     customClasses: [
       {
         name: 'quote',
@@ -114,7 +141,9 @@ export class AppComponent implements OnInit {
     toolbarBtnClass: 'btn btn-light btn-sm',
   };
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, library: FaIconLibrary) {
+    library.addIcons(faImages, faDownload);
+  }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -123,7 +152,7 @@ export class AppComponent implements OnInit {
     console.log(this.htmlContent1);
   }
 
-  onChange(event) {
+  onChange(_event) {
     console.log('changed');
   }
 
@@ -131,7 +160,7 @@ export class AppComponent implements OnInit {
     console.log('blur ' + event);
   }
 
-  onChange2(event) {
+  onChange2(_event) {
     console.warn(this.form.value);
   }
 }

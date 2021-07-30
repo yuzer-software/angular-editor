@@ -4,6 +4,12 @@ export interface CustomClass {
   tag?: string;
 }
 
+export interface CustomButton {
+  customButtonId: string;
+  faIcon: IconProp; // ex: ['fas', 'search']
+  onClick: () => void;
+}
+
 export interface Font {
   name: string;
   class: string;
@@ -27,6 +33,7 @@ export interface AngularEditorConfig {
   uploadUrl?: string;
   uploadWithCredentials?: boolean;
   fonts?: Font[];
+  customButtons?: CustomButton[];
   customClasses?: CustomClass[];
   sanitize?: boolean;
   toolbarPosition?: 'top' | 'bottom' | 'floating';
