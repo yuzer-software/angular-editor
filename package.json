@@ -1,6 +1,6 @@
 {
   "name": "@geargroup/angular-editor",
-  "version": "2.2.0",
+  "version": "2.4.0",
   "scripts": {
     "ng": "ng",
     "start": "ng build angular-editor --prod && yarn copy:style && ng serve",
