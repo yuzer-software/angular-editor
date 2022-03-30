@@ -18,7 +18,7 @@
     "copy:changelog": "cpx CHANGELOG.md dist/angular-editor",
     "copy:license": "cpx LICENSE dist/angular-editor",
     "test-ci": "ng test angular-editor --code-coverage --watch=false --browsers=ChromeHeadless && cat ./coverage/angular-editor/lcov.info | coveralls",
-    "postinstall": "node --max_old_space_size=4096 ./node_modules/@angular/compiler-cli/ngcc/main-ngcc.js --tsconfig ./tsconfig.base.json"
+    "postinstall": "node --max_old_space_size=4096 ./node_modules/.bin/ngcc --tsconfig ./tsconfig.base.json"
   },
   "private": true,
   "dependencies": {
