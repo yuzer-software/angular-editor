@@ -1,3 +1,12 @@
+interface PositioningRect {
+  width: number;
+  height: number;
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
+
 export class Positioning {
   private getAllStyles(element: HTMLElement) {
     return window.getComputedStyle(element);
@@ -21,19 +30,19 @@ export class Positioning {
     return offsetParentEl || document.documentElement;
   }
 
-  position(element: HTMLElement, round = true): ClientRect {
-    let elPosition: ClientRect;
-    let parentOffset: ClientRect = { width: 0, height: 0, top: 0, bottom: 0, left: 0, right: 0 };
+  private position(element: HTMLElement, round = true): PositioningRect {
+    let elPosition: PositioningRect;
+    let parentOffset: PositioningRect = { width: 0, height: 0, top: 0, bottom: 0, left: 0, right: 0 };
 
     if (this.getStyle(element, 'position') === 'fixed') {
-      elPosition = element.getBoundingClientRect();
+      const boundingRect = element.getBoundingClientRect();
       elPosition = {
-        top: elPosition.top,
-        bottom: elPosition.bottom,
-        left: elPosition.left,
-        right: elPosition.right,
-        height: elPosition.height,
-        width: elPosition.width,
+        top: boundingRect.top,
+        bottom: boundingRect.bottom,
+        left: boundingRect.left,
+        right: boundingRect.right,
+        height: boundingRect.height,
+        width: boundingRect.width,
       };
     } else {
       const offsetParentEl = this.offsetParent(element);
@@ -63,7 +72,7 @@ export class Positioning {
     return elPosition;
   }
 
-  offset(element: HTMLElement, round = true): ClientRect {
+  private offset(element: HTMLElement, round = true): PositioningRect {
     const elBcr = element.getBoundingClientRect();
     const viewportOffset = {
       top: window.pageYOffset - document.documentElement.clientTop,

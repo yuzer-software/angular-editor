@@ -1,6 +1,6 @@
 {
   "name": "@geargroup/angular-editor",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "scripts": {
     "ng": "ng",
     "start": "ng build angular-editor --configuration production && yarn copy:style && ng serve",
@@ -38,7 +38,7 @@
     "@tinkoff/ng-dompurify": "^3.0.0",
     "bootstrap": "^4.5.3",
     "dompurify": "^2.3.3",
-    "ngx-color-picker": "^11.0.0",
+    "ngx-color-picker": "^12.0.1",
     "rxjs": "~6.6.3",
     "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
@@ -52,7 +52,6 @@
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^14.14.11",
-    "codelyzer": "^6.0.0",
     "coveralls": "^3.0.4",
     "cpx": "^1.5.0",
     "jasmine-core": "~3.6.0",
