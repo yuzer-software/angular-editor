@@ -23,8 +23,10 @@
           "configurations": {
             "production": {
               "tsConfig": "projects/angular-editor/tsconfig.lib.prod.json"
-            }
-          }
+            },
+            "development": {}
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -104,20 +106,24 @@
                   "maximumWarning": "6kb"
                 }
               ]
-            }
+            },
+            "development": {}
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-editor-app:build"
           },
           "configurations": {
             "production": {
               "browserTarget": "angular-editor-app:build:production"
+            },
+            "development": {
+              "browserTarget": "angular-editor-app:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -154,14 +160,17 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/angular-editor-app/e2e/protractor.conf.js",
-            "devServerTarget": "angular-editor-app:serve"
+            "protractorConfig": "projects/angular-editor-app/e2e/protractor.conf.js"
           },
           "configurations": {
             "production": {
               "devServerTarget": "angular-editor-app:serve:production"
+            },
+            "development": {
+              "devServerTarget": "angular-editor-app:serve:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         }
       }
     }
