@@ -20,7 +20,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
+import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { Subscription } from 'rxjs';
 import { AngularEditorToolbarComponent } from './angular-editor-toolbar.component';
 import { AngularEditorService } from './angular-editor.service';
@@ -97,7 +97,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
     private r: Renderer2,
     private editorService: AngularEditorService,
     @Inject(DOCUMENT) private doc: any,
-    private sanitizer: DomSanitizer,
+    private sanitizer: NgDompurifySanitizer,
     private cdRef: ChangeDetectorRef,
     @Attribute('tabindex') defaultTabIndex: string,
     @Attribute('autofocus') private autoFocus: any,

@@ -1,6 +1,6 @@
 {
   "name": "@geargroup/angular-editor",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "scripts": {
     "ng": "ng",
     "start": "ng build angular-editor --prod && yarn copy:style && ng serve",
@@ -35,7 +35,9 @@
     "@fortawesome/fontawesome-svg-core": "1.2.32",
     "@fortawesome/free-solid-svg-icons": "5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
+    "@tinkoff/ng-dompurify": "^3.0.0",
     "bootstrap": "^4.5.3",
+    "dompurify": "^2.3.3",
     "ngx-color-picker": "^11.0.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.3",
@@ -46,6 +48,7 @@
     "@angular/cli": "^11.0.3",
     "@angular/compiler-cli": "^11.0.3",
     "@angular/language-service": "^11.0.3",
+    "@types/dompurify": "^2.3.1",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^14.14.11",

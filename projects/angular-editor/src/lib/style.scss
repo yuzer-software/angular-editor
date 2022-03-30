@@ -1,6 +1,6 @@
 $angular-editor-textarea-bg: #fff !default;
 $angular-editor-textarea-border-color: #ddd !default;
-$angular-editor-textarea-resize-color: rgba(255,255,255,0.5) !default;
+$angular-editor-textarea-resize-color: rgba(255, 255, 255, 0.5) !default;
 $angular-editor-blockquote-border-color: #dfe2e5 !default;
 $angular-editor-placeholder-color: #6c757d !default;
 
@@ -11,7 +11,7 @@ $angular-editor-vars: map-merge(
     angular-editor-textarea-border-color: $angular-editor-textarea-border-color,
     angular-editor-textarea-resize-color: $angular-editor-textarea-resize-color,
     angular-editor-blockquote-border-color: $angular-editor-blockquote-border-color,
-    angular-editor-placeholder-color: $angular-editor-placeholder-color
+    angular-editor-placeholder-color: $angular-editor-placeholder-color,
   ),
   $angular-editor-vars
 );
@@ -22,7 +22,7 @@ $angular-editor-vars: map-merge(
   .angular-editor {
     position: relative;
 
-    ::ng-deep [contenteditable=true]:empty:before {
+    ::ng-deep [contenteditable='true']:empty:before {
       content: attr(placeholder);
       // display: block; // for firefox
       color: #868e96;
@@ -50,15 +50,15 @@ $angular-editor-vars: map-merge(
         }
 
         &:after {
-          content:"";
+          content: '';
           position: absolute;
           bottom: 0;
-          right:0;
-          display:block;
-          width:8px;
-          height:8px;
+          right: 0;
+          display: block;
+          width: 8px;
+          height: 8px;
           cursor: nwse-resize;
-          background-color:  map-get($theme, angular-editor-textarea-resize-color);
+          background-color: map-get($theme, angular-editor-textarea-resize-color);
         }
       }
 

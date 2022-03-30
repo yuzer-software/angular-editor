@@ -1,3 +1,5 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+
 export interface CustomClass {
   name: string;
   class: string;
@@ -62,7 +64,7 @@ export const angularEditorConfig: AngularEditorConfig = {
     { class: 'arial', name: 'Arial' },
     { class: 'times-new-roman', name: 'Times New Roman' },
     { class: 'calibri', name: 'Calibri' },
-    { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    { class: 'comic-sans-ms', name: 'Comic Sans MS' },
   ],
   uploadUrl: 'v1/image',
   uploadWithCredentials: false,
