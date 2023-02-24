@@ -1,6 +1,6 @@
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, KeyValue } from '@angular/common';
 import { HttpClient, HttpEvent } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { ElementRef, Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CustomClass } from './config';
 
@@ -9,19 +9,23 @@ export interface UploadResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AngularEditorService {
-
   savedSelection: Range | null;
   selectedText: string;
   uploadUrl: string;
   uploadWithCredentials: boolean;
+  private renderer: Renderer2;
+  textArea?: ElementRef;
 
-  constructor(
-    private http: HttpClient,
-    @Inject(DOCUMENT) private doc: any
-  ) { }
+  constructor(private http: HttpClient, @Inject(DOCUMENT) private doc: any, rendererFactory: RendererFactory2) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+  }
+
+  setTextArea(textArea: ElementRef) {
+    this.textArea = textArea;
+  }
 
   /**
    * Executed command from editor header buttons exclude toggleEditorMode
@@ -34,6 +38,50 @@ export class AngularEditorService {
       return;
     }
     this.doc.execCommand(command, false, null);
+  }
+
+  insertVariable(variable: KeyValue<string, string>) {
+    const variableSpanElement: Element = this.renderer.createElement('span');
+    this.renderer.setAttribute(variableSpanElement, 'yuz-var', variable.key);
+    this.renderer.addClass(variableSpanElement, 'yuz-var');
+
+    const userSelection = window.getSelection();
+    const selectedTextRange = userSelection.getRangeAt(0);
+    selectedTextRange.surroundContents(variableSpanElement);
+
+    variableSpanElement.innerHTML = variable.value;
+    const preSpan = this.renderer.createElement('span');
+    const postSpan = this.renderer.createElement('span');
+    variableSpanElement.before(preSpan);
+    variableSpanElement.after(postSpan);
+
+    preSpan.innerHTML = '&#8203;';
+    postSpan.innerHTML = '&#8203;';
+
+    var range = document.createRange();
+    range.setStartBefore(preSpan);
+    range.setEndAfter(postSpan);
+
+    userSelection.removeAllRanges();
+    userSelection.addRange(range);
+  }
+
+  selectVariable(variableSpanElement: Node) {
+    var range = document.createRange();
+
+    range.setStartAfter(variableSpanElement.previousSibling);
+    range.setEnd(variableSpanElement.nextSibling, 1);
+
+    // range.setStartAfter(variableSpanElement.previousSibling);
+    // range.setStart(range.startContainer, range.startOffset - 1);
+    // range.setEndBefore(variableSpanElement.nextSibling);
+    // range.setEnd(range.endContainer, range.endOffset + 11);
+
+    const userSelection = window.getSelection();
+    userSelection.removeAllRanges();
+    userSelection.addRange(range);
+
+    variableSpanElement.nextSibling;
   }
 
   /**
@@ -87,7 +135,6 @@ export class AngularEditorService {
    * @param html HTML string
    */
   insertHtml(html: string): void {
-
     const isHTMLInserted = this.doc.execCommand('insertHTML', false, html);
 
     if (!isHTMLInserted) {
@@ -110,7 +157,7 @@ export class AngularEditorService {
     } else {
       this.savedSelection = null;
     }
-  }
+  };
 
   /**
    * restore selection when the editor is focused in
@@ -140,23 +187,11 @@ export class AngularEditorService {
     setTimeout(callbackFn, timeout);
   }
 
-  /** check any selection is made or not */
-  private checkSelection(): any {
-
-    const selectedText = this.savedSelection.toString();
-
-    if (selectedText.length === 0) {
-      throw new Error('No Selection Made');
-    }
-    return true;
-  }
-
   /**
    * Upload file to uploadUrl
    * @param file The file
    */
   uploadImage(file: File): Observable<HttpEvent<UploadResponse>> {
-
     const uploadData: FormData = new FormData();
 
     uploadData.append('file', file, file.name);
@@ -213,7 +248,7 @@ export class AngularEditorService {
   }
 
   private insertVimeoVideoTag(videoUrl: string): void {
-    const sub = this.http.get<any>(`https://vimeo.com/api/oembed.json?url=${videoUrl}`).subscribe(data => {
+    const sub = this.http.get<any>(`https://vimeo.com/api/oembed.json?url=${videoUrl}`).subscribe((data) => {
       const imageUrl = data.thumbnail_url_with_play_button;
       const thumbnail = `<div>
         <a href='${videoUrl}' target='_blank'>
@@ -250,7 +285,7 @@ export class AngularEditorService {
     } else {
       // Iterate nodes until we hit the end container
       while (node && node !== endNode) {
-        rangeNodes.push(node = this.nextNode(node));
+        rangeNodes.push((node = this.nextNode(node)));
       }
 
       // Add partially selected nodes at the start of the range
@@ -295,8 +330,7 @@ export class AngularEditorService {
   removeSelectedElements(tagNames) {
     const tagNamesArray = tagNames.toLowerCase().split(',');
     this.getSelectedNodes().forEach((node) => {
-      if (node.nodeType === 1 &&
-        tagNamesArray.indexOf(node.tagName.toLowerCase()) > -1) {
+      if (node.nodeType === 1 && tagNamesArray.indexOf(node.tagName.toLowerCase()) > -1) {
         // Remove the node and replace it with its children
         this.replaceWithOwnChildren(node);
       }

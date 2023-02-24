@@ -1,6 +1,6 @@
 {
   "name": "@geargroup/angular-editor",
-  "version": "2.5.0",
+  "version": "2.7.1",
   "description": "A simple native WYSIWYG editor for Angular 10+. Rich Text editor component for Angular.",
   "author": "Gear Group",
   "repository": "https://github.com/gear-group/angular-editor",
@@ -9,11 +9,16 @@
   "bugs": {
     "url": "https://github.com/gear-group/angular-editor/issues"
   },
+  "exports": {
+    ".": {
+      "sass": "./src/lib/_index.scss"
+    }
+  },
   "peerDependencies": {
-    "@angular/common": ">=8.0.0 <13",
-    "@angular/core": ">=8.0.0 <13",
-    "@angular/forms": ">=8.0.0 <13",
-    "@angular/platform-browser": ">=8.0.0 <13",
+    "@angular/common": ">=8.0.0 <14",
+    "@angular/core": ">=8.0.0 <14",
+    "@angular/forms": ">=8.0.0 <14",
+    "@angular/platform-browser": ">=8.0.0 <14",
     "rxjs": "^6.x.x"
   },
   "keywords": [

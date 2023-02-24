@@ -19,11 +19,26 @@ export class AngularEditorToolbarComponent implements OnInit {
 
   htmlMode = false;
   linkSelected = false;
+
+  variableName?: string;
+  variableNode?: Node;
+
   block = 'default';
   fontName = 'Times New Roman';
   fontSize = '3';
   foreColour;
   backColor;
+
+  variables: SelectOption[] = [
+    {
+      label: 'Family name',
+      value: 'familyName',
+    },
+    {
+      label: 'Given name',
+      value: 'givenName',
+    },
+  ];
 
   headings: SelectOption[] = [
     {
@@ -225,7 +240,14 @@ export class AngularEditorToolbarComponent implements OnInit {
     if (!this.showToolbar) {
       return;
     }
+
     this.linkSelected = nodes.findIndex((x) => x.nodeName === 'A') > -1;
+
+    const variableNode = nodes.find((it) => !!(it as Element).attributes?.getNamedItem('yuz-var'));
+    if (variableNode) {
+      this.editorService.selectVariable(variableNode);
+    }
+
     let found = false;
     this.select.forEach((y) => {
       const node = nodes.find((x) => x.nodeName === y);
@@ -272,6 +294,17 @@ export class AngularEditorToolbarComponent implements OnInit {
     this.fontSize = this.doc.queryCommandValue('FontSize');
     this.fontName = this.doc.queryCommandValue('FontName').replace(/"/g, '');
     this.backColor = this.doc.queryCommandValue('backColor');
+  }
+
+  insertVariable(selectValue: string) {
+    const variable = this.variables.find((it) => it.value === selectValue);
+    if (variable) {
+      this.editorService.insertVariable({
+        key: variable.value,
+        value: variable.label,
+      });
+    }
+    this.execute.emit('contentChange');
   }
 
   /**

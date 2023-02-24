@@ -293,6 +293,18 @@
     ></ae-select>
   </div>
   <div class="btn-group m-1">
+    <ae-select
+      class="select-heading"
+      [selectBtnClass]="toolbarBtnClass"
+      [options]="variables"
+      [(ngModel)]="variableName"
+      (change)="insertVariable($event)"
+      [disabled]="htmlMode"
+      [hidden]="isButtonHidden('heading')"
+      tabindex="-1"
+    ></ae-select>
+  </div>
+  <div class="btn-group m-1">
     <button
       [id]="'link-' + id"
       type="button"

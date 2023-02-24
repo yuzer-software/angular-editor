@@ -132,20 +132,29 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
    */
   executeCommand(command: string) {
     this.focus();
-    if (command === 'toggleEditorMode') {
-      this.toggleEditorMode(this.modeVisual);
-    } else if (command !== '') {
-      if (command === 'clear') {
+
+    switch (command) {
+      case '': // noop
+        return;
+      case 'contentChange':
+        this.onContentChange(this.textArea.nativeElement);
+        break;
+      case 'toggleEditorMode':
+        this.toggleEditorMode(this.modeVisual);
+        break;
+      case 'clear':
         this.editorService.removeSelectedElements(this.getCustomTags());
         this.onContentChange(this.textArea.nativeElement);
-      } else if (command === 'default') {
+        break;
+      case 'default':
         this.editorService.removeSelectedElements('h1,h2,h3,h4,h5,h6,p,pre');
         this.onContentChange(this.textArea.nativeElement);
-      } else {
+        break;
+      default:
         this.editorService.executeCommand(command);
-      }
-      this.exec();
+        break;
     }
+    this.exec();
   }
 
   /**
@@ -384,7 +393,7 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
 
     let a = userSelection.focusNode;
     const els = [];
-    while (a && a.id !== 'editor') {
+    while (a && a !== this.textArea.nativeElement) {
       els.unshift(a);
       a = a.parentNode;
     }
