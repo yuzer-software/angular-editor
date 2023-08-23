@@ -1,11 +1,15 @@
 {
-  "name": "@geargroup/angular-editor",
+  "name": "@yuzer-software/angular-editor",
   "version": "2.7.1",
   "description": "A simple native WYSIWYG editor for Angular 10+. Rich Text editor component for Angular.",
-  "author": "Gear Group",
+  "author": "Yuzer",
   "repository": "https://github.com/gear-group/angular-editor",
   "license": "MIT",
   "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "bugs": {
     "url": "https://github.com/gear-group/angular-editor/issues"
   },
@@ -19,6 +23,8 @@
     "@angular/core": ">=8.0.0 <14",
     "@angular/forms": ">=8.0.0 <14",
     "@angular/platform-browser": ">=8.0.0 <14",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "rxjs": "^6.x.x"
   },
   "keywords": [

@@ -1,9 +1,12 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpResponse } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { from } from 'rxjs';
 import { SelectOption } from './ae-select/ae-select.component';
 import { AngularEditorService } from './angular-editor.service';
 import { CustomButton, CustomClass } from './config';
+import { PromptModalComponent } from './prompt-modal.component';
 
 @Component({
   selector: 'angular-editor-toolbar',
@@ -196,7 +199,8 @@ export class AngularEditorToolbarComponent implements OnInit {
     private r: Renderer2,
     private editorService: AngularEditorService,
     @Inject(DOCUMENT) private doc: any,
-    elementRef: ElementRef<HTMLElement>
+    elementRef: ElementRef<HTMLElement>,
+    private modalService: NgbModal
   ) {
     this.nativeElement = elementRef.nativeElement;
   }
@@ -319,10 +323,17 @@ export class AngularEditorToolbarComponent implements OnInit {
         url = parent.href;
       }
     }
-    url = prompt('Insert URL link', url);
-    if (url && url !== '' && url !== 'https://') {
-      this.editorService.createLink(url);
-    }
+    const modal = this.modalService.open(PromptModalComponent);
+    (modal.componentInstance as PromptModalComponent).init(url);
+    from(modal.result).subscribe(
+      (url) => {
+        this.editorService.restoreSelection();
+        if (url && url !== '' && url !== 'https://') {
+          this.editorService.createLink(url);
+        }
+      },
+      () => {} //dismissed
+    );
   }
 
   /**
@@ -330,10 +341,16 @@ export class AngularEditorToolbarComponent implements OnInit {
    */
   insertVideo() {
     this.execute.emit('');
-    const url = prompt('Insert Video link', `https://`);
-    if (url && url !== '' && url !== `https://`) {
-      this.editorService.insertVideo(url);
-    }
+
+    const modal = this.modalService.open(PromptModalComponent);
+    from(modal.result).subscribe(
+      (url) => {
+        if (url && url !== '' && url !== `https://`) {
+          this.editorService.insertVideo(url);
+        }
+      },
+      () => {} //dismissed
+    );
   }
 
   /** insert color */

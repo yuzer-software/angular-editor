@@ -14,20 +14,22 @@ Forked from the work of Andrey Kolkov (https://github.com/kolkov/angular-editor)
 
 ### Installation
 
-Install via [npm][npm] package manager 
+Install via [npm][npm] package manager
 
 ```bash
-npm install @geargroup/angular-editor --save
+npm install @yuzer-software/angular-editor --save
 ```
+
 ### Versions
 
 2.1.0 for Angular v11
-* Update dependencies
-* Cleanup some css and do not embed default
 
-2.0.0 for Angular v10
-* Update Bootstrap and FontAwesomeIcons v5
-* Fix color change in editor
-* Improve look and feel
-* Improve button's interaction display in custom options
+- Update dependencies
+- Cleanup some css and do not embed default
 
+  2.0.0 for Angular v10
+
+- Update Bootstrap and FontAwesomeIcons v5
+- Fix color change in editor
+- Improve look and feel
+- Improve button's interaction display in custom options

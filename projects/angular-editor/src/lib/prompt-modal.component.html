@@ -1,0 +1,10 @@
+<div class="modal-body container-fluid">
+  <div class="form-group">
+    <label for="editor-prompt">URL</label>
+    <input type="text" class="form-control" id="editor-prompt" [(ngModel)]="prompt" placeholder="name@example.com" required />
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-outline-secondary" (click)="cancel()" ngbAutofocus>{{ 'common.actions.cancel' | translate }}</button>
+  <button class="btn btn-success ml-1" [disabled]="prompt.length < 3" (click)="close()">{{ 'common.actions.save' | translate }}</button>
+</div>
