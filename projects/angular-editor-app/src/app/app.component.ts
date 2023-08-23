@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faDownload, faImages } from '@fortawesome/free-solid-svg-icons';
 import { AngularEditorConfig } from 'angular-editor';
@@ -12,7 +12,7 @@ import { AngularEditorConfig } from 'angular-editor';
 export class AppComponent implements OnInit {
   title = 'app';
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   floatingHtmlContent = '';
   htmlContent1 = '';
@@ -141,7 +141,7 @@ export class AppComponent implements OnInit {
     toolbarBtnClass: 'btn btn-light btn-sm',
   };
 
-  constructor(private formBuilder: FormBuilder, library: FaIconLibrary) {
+  constructor(private formBuilder: UntypedFormBuilder, library: FaIconLibrary) {
     library.addIcons(faImages, faDownload);
   }
 

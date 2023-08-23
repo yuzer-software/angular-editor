@@ -18,7 +18,7 @@
     "copy:changelog": "cpx CHANGELOG.md dist/angular-editor",
     "copy:license": "cpx LICENSE dist/angular-editor",
     "test-ci": "ng test angular-editor --code-coverage --watch=false --browsers=ChromeHeadless && cat ./coverage/angular-editor/lcov.info | coveralls",
-    "postinstall": "node --max_old_space_size=4096 ./node_modules/.bin/ngcc --tsconfig ./tsconfig.base.json"
+    "postinstall": "yarn run ngcc --tsconfig ./tsconfig.base.json"
   },
   "private": false,
   "publishConfig": {
@@ -26,15 +26,15 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@angular/animations": "^13.3.0",
-    "@angular/common": "^13.3.0",
-    "@angular/compiler": "^13.3.0",
-    "@angular/core": "^13.3.0",
-    "@angular/forms": "^13.3.0",
-    "@angular/localize": "^13.3.0",
-    "@angular/platform-browser": "^13.3.0",
-    "@angular/platform-browser-dynamic": "^13.3.0",
-    "@angular/router": "^13.3.0",
+    "@angular/animations": "^14.3.0",
+    "@angular/common": "^14.3.0",
+    "@angular/compiler": "^14.3.0",
+    "@angular/core": "^14.3.0",
+    "@angular/forms": "^14.3.0",
+    "@angular/localize": "^14.3.0",
+    "@angular/platform-browser": "^14.3.0",
+    "@angular/platform-browser-dynamic": "^14.3.0",
+    "@angular/router": "^14.3.0",
     "@fortawesome/angular-fontawesome": "0.10.2",
     "@fortawesome/fontawesome-svg-core": "1.2.32",
     "@fortawesome/free-solid-svg-icons": "5.15.1",
@@ -50,10 +50,10 @@
     "@ngx-translate/http-loader": "^7.0.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.3.0",
-    "@angular/cli": "^13.3.0",
-    "@angular/compiler-cli": "^13.3.0",
-    "@angular/language-service": "^13.3.0",
+    "@angular-devkit/build-angular": "~14.2.12",
+    "@angular/cli": "^14.2.12",
+    "@angular/compiler-cli": "^14.3.0",
+    "@angular/language-service": "^14.3.0",
     "@types/dompurify": "^2.3.1",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
@@ -67,7 +67,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "ng-packagr": "^13.3.0",
+    "ng-packagr": "^14.2.2",
     "prettier": "^2.3.1",
     "protractor": "~7.0.0",
     "ts-node": "~9.1.1",
