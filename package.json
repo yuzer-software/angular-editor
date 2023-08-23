@@ -1,6 +1,6 @@
 {
   "name": "@yuzer-software/angular-editor",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "scripts": {
     "ng": "ng",
     "start": "ng build angular-editor --configuration production && yarn copy:style && ng serve",
@@ -12,7 +12,7 @@
     "build-watch:lib": "ng build angular-editor --watch",
     "test:lib": "ng test angular-editor",
     "build:lib": "ng build angular-editor --configuration production",
-    "publish:lib": "yarn build:lib && yarn copy:style && yarn copy:readme && yarn run copy:changelog && yarn run copy:license && yarn publish --access public ./dist/angular-editor",
+    "publish:lib": "yarn build:lib && yarn copy:style && yarn copy:readme && yarn run copy:changelog && yarn run copy:license && yarn publish ./dist/angular-editor",
     "copy:style": "cpx projects/angular-editor/src/lib/style.scss dist/angular-editor",
     "copy:readme": "cpx README.md dist/angular-editor",
     "copy:changelog": "cpx CHANGELOG.md dist/angular-editor",
