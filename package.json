@@ -1,6 +1,6 @@
 {
   "name": "@yuzer-software/angular-editor",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "scripts": {
     "ng": "ng",
     "start": "ng build angular-editor --configuration production && yarn copy:style && ng serve",
@@ -39,15 +39,15 @@
     "@fortawesome/fontawesome-svg-core": "1.2.32",
     "@fortawesome/free-solid-svg-icons": "5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^11.0.0",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "@tinkoff/ng-dompurify": "^3.0.0",
     "bootstrap": "^4.5.3",
     "dompurify": "^2.3.3",
     "ngx-color-picker": "^12.0.1",
     "rxjs": "~6.6.3",
     "tslib": "^2.3.1",
-    "zone.js": "~0.11.4",
-    "@ngx-translate/core": "^14.0.0",
-    "@ngx-translate/http-loader": "^7.0.0"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~14.2.12",
