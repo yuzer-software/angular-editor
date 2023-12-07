@@ -1,6 +1,6 @@
 {
   "name": "@yuzer-software/angular-editor",
-  "version": "2.9.2",
+  "version": "2.9.6",
   "scripts": {
     "ng": "ng",
     "start": "ng build angular-editor --configuration production && yarn copy:style && ng serve",
@@ -20,10 +20,10 @@
     "test-ci": "ng test angular-editor --code-coverage --watch=false --browsers=ChromeHeadless && cat ./coverage/angular-editor/lcov.info | coveralls",
     "postinstall": "yarn run ngcc --tsconfig ./tsconfig.base.json"
   },
-  "private": false,
+  "repository": "https://github.com/yuzer-software/angular-editor.git",
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
     "@angular/animations": "^14.3.0",

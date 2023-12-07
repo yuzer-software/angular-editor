@@ -136,10 +136,13 @@ export class AeSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.labelButton.nativeElement.disabled = isDisabled;
-    const div = this.labelButton.nativeElement;
-    const action = isDisabled ? 'addClass' : 'removeClass';
-    this.r[action](div, 'disabled');
+    const labelNativeElement = this.labelButton?.nativeElement;
+    if (labelNativeElement !== undefined && labelNativeElement !== null) {
+      this.labelButton.nativeElement.disabled = isDisabled;
+      const div = this.labelButton.nativeElement;
+      const action = isDisabled ? 'addClass' : 'removeClass';
+      this.r[action](div, 'disabled');
+    }
     this.disabled = isDisabled;
   }
 

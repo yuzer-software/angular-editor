@@ -1,15 +1,15 @@
 {
   "name": "@yuzer-software/angular-editor",
-  "version": "2.7.1",
+  "version": "2.9.6",
   "description": "A simple native WYSIWYG editor for Angular 10+. Rich Text editor component for Angular.",
   "author": "Yuzer",
-  "repository": "https://github.com/gear-group/angular-editor",
-  "license": "MIT",
-  "private": false,
+  "repository": "https://github.com/yuzer-software/angular-editor.git",
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://npm.pkg.github.com"
   },
+  "license": "MIT",
+  "private": false,
   "bugs": {
     "url": "https://github.com/gear-group/angular-editor/issues"
   },
