@@ -196,14 +196,9 @@ export class AngularEditorComponent implements OnInit, ControlValueAccessor, Aft
       this.onTouched();
     }
 
-    if (event.relatedTarget !== null) {
-      const parent = (event.relatedTarget as HTMLElement).parentElement;
-      if (!parent.classList.contains('angular-editor-toolbar-set') && !parent.classList.contains('ae-picker')) {
-        this.blurEvent.emit(event);
-        this.resetContainer();
-        this.focused = false;
-      }
-    }
+    this.blurEvent.emit(event);
+    this.resetContainer();
+    this.focused = false;
   }
 
   /**

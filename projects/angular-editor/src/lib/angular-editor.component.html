@@ -1,4 +1,4 @@
-<div class="angular-editor" #angularEditor [style.width]="config.width" [style.minWidth]="config.minWidth" (blur)="onTextAreaBlur($event)">
+<div class="angular-editor" #angularEditor [style.width]="config.width" [style.minWidth]="config.minWidth">
   <angular-editor-toolbar
     #editorToolbar
     [id]="id"
@@ -29,6 +29,7 @@
       [style.outline]="config.outline === false ? 'none' : undefined"
       (input)="onContentChange($event.target)"
       (focus)="onTextAreaFocus($event)"
+      (blur)="onTextAreaBlur($event)"
       (click)="exec()"
       (keyup)="exec()"
       (mouseout)="onTextAreaMouseOut($event)"
